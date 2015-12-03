@@ -1,0 +1,7 @@
+<?php
+$s_plugin_WhiteboardMenu_menu_title = 'Whiteboard';
+$s_plugin_WhiteboardMenu_config_title = 'Configuration';
+$s_plugin_WhiteboardMenu_config_caption = 'General configuration';
+$s_plugin_WhiteboardMenu_config_accesslevel = 'Access level';
+$s_plugin_WhiteboardMenu_config_show_footer = 'Show plugin info in footer?';
+$s_plugin_WhiteboardMenu_config_show_menu = 'Show plugin menu entry?';
