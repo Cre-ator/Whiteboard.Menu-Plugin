@@ -1,5 +1,5 @@
 <?php
-include WHITEBOARDMENU_CORE_URI . 'print_api.php';
+require_once WHITEBOARDMENU_CORE_URI . 'print_api.php';
 
 $print_api = new print_api();
 

@@ -4,8 +4,8 @@ access_ensure_global_level( config_get( 'AccessLevel' ) );
 
 form_security_validate( 'plugin_WhiteboardMenu_config_update' );
 
-require_once( WHITEBOARDMENU_CORE_URI . 'constant_api.php' );
-include WHITEBOARDMENU_CORE_URI . 'config_api.php';
+require_once WHITEBOARDMENU_CORE_URI . 'constant_api.php';
+require_once WHITEBOARDMENU_CORE_URI . 'config_api.php';
 
 $config_api = new config_api();
 
