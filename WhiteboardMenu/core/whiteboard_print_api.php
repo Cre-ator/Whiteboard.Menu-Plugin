@@ -1,6 +1,6 @@
 <?php
 
-class print_api
+class whiteboard_print_api
 {
    public function printWhiteboardMenu()
    {
