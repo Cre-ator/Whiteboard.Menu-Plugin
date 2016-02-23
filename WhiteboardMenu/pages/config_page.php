@@ -1,8 +1,8 @@
 <?php
-require_once WHITEBOARDMENU_CORE_URI . 'constant_api.php';
-require_once WHITEBOARDMENU_CORE_URI . 'config_api.php';
+require_once WHITEBOARDMENU_CORE_URI . 'whiteboard_constant_api.php';
+require_once WHITEBOARDMENU_CORE_URI . 'whiteboard_config_api.php';
 
-$config_api = new config_api();
+$whiteboard_config_api = new whiteboard_config_api();
 
 auth_reauthenticate();
 access_ensure_global_level( plugin_config_get( 'AccessLevel' ) );
@@ -26,8 +26,8 @@ else
    echo '<table>';
 }
 
-$config_api->printFormTitle( 3, 'config_caption' );
-$config_api->printTableRow();
+$whiteboard_config_api->printFormTitle( 3, 'config_caption' );
+$whiteboard_config_api->printTableRow();
 echo '<td class="category" width="30%">';
 echo '<span class="required">*</span>' . plugin_lang_get( 'config_accesslevel' );
 echo '</td>';
@@ -38,14 +38,14 @@ echo '</select>';
 echo '</td>';
 echo '</tr>';
 
-$config_api->printTableRow();
-$config_api->printCategoryField( 1, 1, 'config_show_footer' );
-$config_api->printRadioButton( 1, 'ShowInFooter' );
+$whiteboard_config_api->printTableRow();
+$whiteboard_config_api->printCategoryField( 1, 1, 'config_show_footer' );
+$whiteboard_config_api->printRadioButton( 1, 'ShowInFooter' );
 echo '</tr>';
 
-$config_api->printTableRow();
-$config_api->printCategoryField( 1, 1, 'config_show_menu' );
-$config_api->printRadioButton( 1, 'ShowMenu' );
+$whiteboard_config_api->printTableRow();
+$whiteboard_config_api->printCategoryField( 1, 1, 'config_show_menu' );
+$whiteboard_config_api->printRadioButton( 1, 'ShowMenu' );
 echo '</tr>';
 
 echo '<tr>';

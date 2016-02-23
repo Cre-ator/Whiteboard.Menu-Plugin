@@ -8,7 +8,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
       $this->description = 'Adds underlying menu for all Whiteboard Management plugins.';
       $this->page = 'config_page';
 
-      $this->version = '1.0.5';
+      $this->version = '1.0.6';
       $this->requires = array
       (
          'MantisCore' => '1.2.0, <= 1.3.99',
@@ -37,7 +37,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
          . DIRECTORY_SEPARATOR
          . 'core'
          . DIRECTORY_SEPARATOR;
-      require_once( $t_core_path . 'constant_api.php' );
+      require_once( $t_core_path . 'whiteboard_constant_api.php' );
    }
 
    function config()
@@ -72,7 +72,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
    {
       if ( plugin_config_get( 'ShowInFooter' ) && $this->getUserHasLevel() )
       {
-         return '<address>' . $this->name . ' ' . $this->version . ' Copyright &copy; 2015 by ' . $this->author . '</address>';
+         return '<address>' . $this->name . ' ' . $this->version . ' Copyright &copy; 2016 by ' . $this->author . '</address>';
       }
       return null;
    }
