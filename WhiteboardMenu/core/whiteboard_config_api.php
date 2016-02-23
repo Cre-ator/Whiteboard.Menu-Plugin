@@ -1,6 +1,6 @@
 <?php
 
-class config_api
+class whiteboard_config_api
 {
    public function printFormTitle( $colspan, $lang_string )
    {
