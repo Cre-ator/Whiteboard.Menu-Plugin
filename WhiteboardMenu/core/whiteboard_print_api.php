@@ -25,6 +25,10 @@ class whiteboard_print_api
          echo '| ';
          echo '<a href="' . plugin_page( 'choose_document', false, 'SpecManagement' ) . '">' . plugin_lang_get( 'menu_title', 'SpecManagement' ) . '</a>';
          echo '</td>';
+         echo '<td>';
+         echo '| ';
+         echo '<a href="' . plugin_page( 'version_view', false, 'SpecManagement' ) . '">' . plugin_lang_get( 'manversions_thead', 'SpecManagement' ) . '</a>';
+         echo '</td>';
       }
 
       if ( plugin_is_installed( 'StoryBoard' )
