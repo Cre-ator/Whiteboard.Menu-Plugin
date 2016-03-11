@@ -27,7 +27,7 @@ class whiteboard_print_api
          echo '</td>';
          echo '<td>';
          echo '| ';
-         echo '<a href="' . plugin_page( 'version_view', false, 'SpecManagement' ) . '">' . plugin_lang_get( 'manversions_thead', 'SpecManagement' ) . '</a>';
+         echo '<a href="' . plugin_page( 'manage_versions', false, 'SpecManagement' ) . '">' . plugin_lang_get( 'manversions_thead', 'SpecManagement' ) . '</a>';
          echo '</td>';
       }
 
