@@ -2,6 +2,6 @@
 $s_plugin_WhiteboardMenu_menu_title = 'Whiteboard';
 $s_plugin_WhiteboardMenu_config_title = 'WhiteboardMenu - Einstellungen';
 $s_plugin_WhiteboardMenu_config_caption = 'Allgemeine Einstellungen';
-$s_plugin_WhiteboardMenu_config_accesslevel = 'Zugriffslevel für Plugin';
+$s_plugin_WhiteboardMenu_config_accesslevel = 'Zugriffslevel';
 $s_plugin_WhiteboardMenu_config_show_footer = 'Plugin Info in Footer anzeigen?';
 $s_plugin_WhiteboardMenu_config_show_menu = 'Plugin Menüeintrag anzeigen?';
