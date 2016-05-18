@@ -21,7 +21,7 @@ class whiteboard_print_api
          {
             echo '<td>';
             echo '| ';
-            echo '<a href="' . plugin_page ( 'UserProject', false, 'UserProjectView' ) . '&sortVal=userName&sort=ASC">' . plugin_lang_get ( 'menu_userprojecttitle', 'UserProjectView' ) . '</a>';
+            echo '<a href="' . plugin_page ( 'UserProject', false, 'UserProjectView' ) . '&amp;sortVal=userName&amp;sort=ASC">' . plugin_lang_get ( 'menu_userprojecttitle', 'UserProjectView' ) . '</a>';
             echo '</td>';
          }
       }
