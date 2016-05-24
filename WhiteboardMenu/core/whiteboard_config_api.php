@@ -2,10 +2,10 @@
 
 class whiteboard_config_api
 {
-   public function printFormTitle ( $colspan, $lang_string )
+   public function printFormTitle ( $lang_string )
    {
       echo '<tr>';
-      echo '<td class="form-title" colspan="' . $colspan . '">';
+      echo '<td class="form-title" colspan="2">';
       echo plugin_lang_get ( $lang_string );
       echo '</td>';
       echo '</tr>';
@@ -23,16 +23,16 @@ class whiteboard_config_api
       }
    }
 
-   public function printCategoryField ( $colspan, $rowspan, $lang_string )
+   public function printCategoryField ( $lang_string )
    {
-      echo '<td class="category" colspan="' . $colspan . '" rowspan="' . $rowspan . '">';
+      echo '<td class="category">';
       echo plugin_lang_get ( $lang_string );
       echo '</td>';
    }
 
-   public function printRadioButton ( $colspan, $name )
+   public function printRadioButton ( $name )
    {
-      echo '<td width="100px" colspan="' . $colspan . '">';
+      echo '<td width="100px">';
       echo '<label>';
       echo '<input type="radio" name="' . $name . '" value="1"';
       echo ( ON == plugin_config_get ( $name ) ) ? 'checked="checked"' : '';
@@ -44,13 +44,6 @@ class whiteboard_config_api
       echo '/>' . lang_get ( 'no' );
       echo '</label>';
       echo '</td>';
-   }
-
-   public function printSpacer ( $colspan )
-   {
-      echo '<tr>';
-      echo '<td class="spacer" colspan="' . $colspan . '">&nbsp;</td>';
-      echo '</tr>';
    }
 
    public function updateValue ( $value, $constant )

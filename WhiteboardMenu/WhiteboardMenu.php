@@ -2,13 +2,13 @@
 
 class WhiteboardMenuPlugin extends MantisPlugin
 {
-   function register()
+   function register ()
    {
       $this->name = 'WhiteboardMenu';
       $this->description = 'Adds underlying menu for all Whiteboard Management plugins.';
       $this->page = 'config_page';
 
-      $this->version = '1.0.10';
+      $this->version = '1.0.11';
       $this->requires = array
       (
          'MantisCore' => '1.2.0, <= 1.3.99',
@@ -19,7 +19,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
       $this->url = '';
    }
 
-   function hooks()
+   function hooks ()
    {
       $hooks = array
       (
@@ -30,17 +30,17 @@ class WhiteboardMenuPlugin extends MantisPlugin
       return $hooks;
    }
 
-   function init()
+   function init ()
    {
-      $t_core_path = config_get_global( 'plugin_path' )
-         . plugin_get_current()
+      $t_core_path = config_get_global ( 'plugin_path' )
+         . plugin_get_current ()
          . DIRECTORY_SEPARATOR
          . 'core'
          . DIRECTORY_SEPARATOR;
-      require_once( $t_core_path . 'whiteboard_constant_api.php' );
+      require_once ( $t_core_path . 'whiteboard_constant_api.php' );
    }
 
-   function config()
+   function config ()
    {
       return array
       (
@@ -50,39 +50,43 @@ class WhiteboardMenuPlugin extends MantisPlugin
       );
    }
 
-   /**
-    * Check if user has level greater or equal then plugin access level
-    *
-    * @return bool - Userlevel is greater or equal then plugin access level
-    */
-   function getUserHasLevel()
+   function footer ()
    {
-      $project_id = helper_get_current_project();
-      $user_id = auth_get_current_user_id();
-
-      return user_get_access_level( $user_id, $project_id ) >= plugin_config_get( 'AccessLevel', PLUGINS_WHITEBOARDMENU_THRESHOLD_LEVEL_DEFAULT );
-   }
-
-   /**
-    * Show plugin info in mantis footer
-    *
-    * @return null|string
-    */
-   function footer()
-   {
-      if ( plugin_config_get( 'ShowInFooter' ) )
+      if ( plugin_config_get ( 'ShowInFooter' ) )
       {
          return '<address>' . $this->name . ' ' . $this->version . ' Copyright &copy; 2016 by ' . $this->author . '</address>';
       }
       return null;
    }
 
-   function menu()
+   function menu ()
    {
-      if ( plugin_config_get( 'ShowMenu' ) )
+      if ( plugin_config_get ( 'ShowMenu' ) )
       {
-         return '<a href="' . plugin_page( 'whiteboard_menu' ) . '">' . plugin_lang_get( 'menu_title' ) . '</a>';
+         require_once ( WHITEBOARDMENU_CORE_URI . 'whiteboard_config_api.php' );
+         $whiteboard_config_api = new whiteboard_config_api();
+
+         $project_id = helper_get_current_project ();
+         $user_id = auth_get_current_user_id ();
+
+         $user_project_view_installed = plugin_is_installed ( 'UserProjectView' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'UserProjectView' );
+         $user_project_access_level = $user_project_view_installed ? $whiteboard_config_api->whitebaord_plugin_config_get ( 'UserProjectAccessLevel', 'UserProjectView' ) : 0;
+
+         $specmanagement_installed = plugin_is_installed ( 'SpecManagement' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'SpecManagement' );
+         $specmanagement_access_level = $specmanagement_installed ? $whiteboard_config_api->whitebaord_plugin_config_get ( 'AccessLevel', 'SpecManagement' ) : 0;
+
+         $storyboard_installed = plugin_is_installed ( 'StoryBoard' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'StoryBoard' );
+         $storyboard_access_level = $storyboard_installed ? $whiteboard_config_api->whitebaord_plugin_config_get ( 'AccessLevel', 'StoryBoard' ) : 0;
+
+         if (
+            ( user_get_access_level ( $user_id, $project_id ) >= $user_project_access_level ) || user_is_administrator ( $user_id ) &&
+            ( user_get_access_level ( $user_id, $project_id ) >= $specmanagement_access_level ) || user_is_administrator ( $user_id ) &&
+            ( user_get_access_level ( $user_id, $project_id ) >= $storyboard_access_level ) || user_is_administrator ( $user_id )
+         )
+         {
+            return '<a href="' . plugin_page ( 'whiteboard_menu' ) . '">' . plugin_lang_get ( 'menu_title' ) . '</a>';
+         }
+         return null;
       }
-      return null;
    }
 }
