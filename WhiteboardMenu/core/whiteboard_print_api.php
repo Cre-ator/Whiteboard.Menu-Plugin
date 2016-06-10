@@ -57,20 +57,20 @@ class whiteboard_print_api
             echo '</td>';
          }
       }
-//
-//      if ( plugin_is_installed ( 'VersionManagement' )
-//         && file_exists ( config_get_global ( 'plugin_path' ) . 'VersionManagement' )
-//      )
-//      {
-//         $versionmanagement_access_level = $whiteboard_config_api->whitebaord_plugin_config_get ( 'version_management_access_level', 'VersionManagement' );
-//         if ( ( user_get_access_level ( $user_id, $project_id ) >= $versionmanagement_access_level ) || user_is_administrator ( $user_id ) )
-//         {
-//            echo '<td>';
-//            echo '| ';
-//            echo '<a href="' . plugin_page ( 'version_view_page', false, 'VersionManagement' ) . '&edit=0">' . plugin_lang_get ( 'menu_title', 'VersionManagement' ) . '</a>';
-//            echo '</td>';
-//         }
-//      }
+
+      if ( plugin_is_installed ( 'VersionManagement' )
+         && file_exists ( config_get_global ( 'plugin_path' ) . 'VersionManagement' )
+      )
+      {
+         $versionmanagement_access_level = $whiteboard_config_api->whitebaord_plugin_config_get ( 'access_level', 'VersionManagement' );
+         if ( ( user_get_access_level ( $user_id, $project_id ) >= $versionmanagement_access_level ) || user_is_administrator ( $user_id ) )
+         {
+            echo '<td>';
+            echo '| ';
+            echo '<a href="' . plugin_page ( 'version_view_page', false, 'VersionManagement' ) . '&amp;edit=0&amp;obsolete=0">' . plugin_lang_get ( 'menu_title', 'VersionManagement' ) . '</a>';
+            echo '</td>';
+         }
+      }
 
       echo '<td>';
       echo ' |';
