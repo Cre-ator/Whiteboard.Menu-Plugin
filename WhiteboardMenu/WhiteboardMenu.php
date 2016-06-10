@@ -8,7 +8,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
       $this->description = 'Adds underlying menu for all Whiteboard Management plugins.';
       $this->page = 'config_page';
 
-      $this->version = '1.0.11';
+      $this->version = '1.0.12';
       $this->requires = array
       (
          'MantisCore' => '1.2.0, <= 1.3.99',
@@ -44,15 +44,14 @@ class WhiteboardMenuPlugin extends MantisPlugin
    {
       return array
       (
-         'ShowInFooter' => ON,
-         'ShowMenu' => ON,
-         'AccessLevel' => ADMINISTRATOR
+         'show_in_footer' => ON,
+         'show_menu' => ON,
       );
    }
 
    function footer ()
    {
-      if ( plugin_config_get ( 'ShowInFooter' ) )
+      if ( plugin_config_get ( 'show_in_footer' ) )
       {
          return '<address>' . $this->name . ' ' . $this->version . ' Copyright &copy; 2016 by ' . $this->author . '</address>';
       }
@@ -61,7 +60,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
 
    function menu ()
    {
-      if ( plugin_config_get ( 'ShowMenu' ) )
+      if ( plugin_config_get ( 'show_menu' ) )
       {
          require_once ( WHITEBOARDMENU_CORE_URI . 'whiteboard_config_api.php' );
          $whiteboard_config_api = new whiteboard_config_api();
@@ -76,12 +75,17 @@ class WhiteboardMenuPlugin extends MantisPlugin
          $specmanagement_access_level = $specmanagement_installed ? $whiteboard_config_api->whitebaord_plugin_config_get ( 'AccessLevel', 'SpecManagement' ) : 0;
 
          $storyboard_installed = plugin_is_installed ( 'StoryBoard' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'StoryBoard' );
-         $storyboard_access_level = $storyboard_installed ? $whiteboard_config_api->whitebaord_plugin_config_get ( 'AccessLevel', 'StoryBoard' ) : 0;
+         $storyboard_access_level = $storyboard_installed ? $whiteboard_config_api->whitebaord_plugin_config_get ( 'access_level', 'StoryBoard' ) : 0;
+
+//         $versionmanagement_installed = plugin_is_installed ( 'VersionManagement' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'VersionManagement' );
+//         $versionmanagement_access_level = $versionmanagement_installed ? $whiteboard_config_api->whitebaord_plugin_config_get ( 'access_level', 'VersionManagement' ) : 0;
 
          if (
-            ( user_get_access_level ( $user_id, $project_id ) >= $user_project_access_level ) || user_is_administrator ( $user_id ) &&
-            ( user_get_access_level ( $user_id, $project_id ) >= $specmanagement_access_level ) || user_is_administrator ( $user_id ) &&
-            ( user_get_access_level ( $user_id, $project_id ) >= $storyboard_access_level ) || user_is_administrator ( $user_id )
+            user_is_administrator ( $user_id )
+            || ( user_get_access_level ( $user_id, $project_id ) >= $user_project_access_level )
+            || ( user_get_access_level ( $user_id, $project_id ) >= $specmanagement_access_level )
+            || ( user_get_access_level ( $user_id, $project_id ) >= $storyboard_access_level )
+//            || ( user_get_access_level ( $user_id, $project_id ) >= $versionmanagement_access_level )
          )
          {
             return '<a href="' . plugin_page ( 'whiteboard_menu' ) . '">' . plugin_lang_get ( 'menu_title' ) . '</a>';

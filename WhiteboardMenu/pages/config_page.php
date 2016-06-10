@@ -27,12 +27,12 @@ else
 $whiteboard_config_api->printFormTitle ( 'config_caption' );
 $whiteboard_config_api->printTableRow ();
 $whiteboard_config_api->printCategoryField ( 'config_show_footer' );
-$whiteboard_config_api->printRadioButton ( 'ShowInFooter' );
+$whiteboard_config_api->printRadioButton ( 'show_in_footer' );
 echo '</tr>';
 
 $whiteboard_config_api->printTableRow ();
 $whiteboard_config_api->printCategoryField ( 'config_show_menu' );
-$whiteboard_config_api->printRadioButton ( 'ShowMenu' );
+$whiteboard_config_api->printRadioButton ( 'show_menu' );
 echo '</tr>';
 
 echo '<tr>';
