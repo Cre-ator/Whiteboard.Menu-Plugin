@@ -1,8 +1,5 @@
 <?php
-require_once WHITEBOARDMENU_CORE_URI . 'whiteboard_constant_api.php';
-require_once WHITEBOARDMENU_CORE_URI . 'whiteboard_config_api.php';
-
-$whiteboard_config_api = new whiteboard_config_api();
+require_once ( __DIR__ . '/../core/whiteboard_config_api.php' );
 
 auth_reauthenticate ();
 html_page_top1 ( plugin_lang_get ( 'config_title' ) );
@@ -16,23 +13,23 @@ echo form_security_field ( 'plugin_WhiteboardMenu_config_update' );
 
 if ( substr ( MANTIS_VERSION, 0, 4 ) == '1.2.' )
 {
-   echo '<table align="center" class="width50" cellspacing="1">';
+    echo '<table align="center" class="width50" cellspacing="1">';
 }
 else
 {
-   echo '<div class="form-container">';
-   echo '<table>';
+    echo '<div class="form-container">';
+    echo '<table>';
 }
 
-$whiteboard_config_api->printFormTitle ( 'config_caption' );
-$whiteboard_config_api->printTableRow ();
-$whiteboard_config_api->printCategoryField ( 'config_show_footer' );
-$whiteboard_config_api->printRadioButton ( 'show_in_footer' );
+whiteboard_config_api::printFormTitle ( 'config_caption' );
+whiteboard_config_api::printTableRow ();
+whiteboard_config_api::printCategoryField ( 'config_show_footer' );
+whiteboard_config_api::printRadioButton ( 'show_in_footer' );
 echo '</tr>';
 
-$whiteboard_config_api->printTableRow ();
-$whiteboard_config_api->printCategoryField ( 'config_show_menu' );
-$whiteboard_config_api->printRadioButton ( 'show_menu' );
+whiteboard_config_api::printTableRow ();
+whiteboard_config_api::printCategoryField ( 'config_show_menu' );
+whiteboard_config_api::printRadioButton ( 'show_menu' );
 echo '</tr>';
 
 echo '<tr>';
@@ -45,7 +42,7 @@ echo '</table>';
 
 if ( substr ( MANTIS_VERSION, 0, 4 ) != '1.2.' )
 {
-   echo '</div>';
+    echo '</div>';
 }
 
 echo '</form>';
