@@ -83,6 +83,23 @@ class whiteboard_print_api
             }
         }
 
+        if ( plugin_is_installed ( 'RoadmapPro' )
+            && file_exists ( config_get_global ( 'plugin_path' ) . 'RoadmapPro' )
+        )
+        {
+            $roadmappro_access_level = whiteboard_config_api::whitebaord_plugin_config_get ( 'roadmap_pro_access_level', 'RoadmapPro' );
+            if (
+                ( ( user_get_access_level ( $user_id, $project_id ) >= $roadmappro_access_level ) || user_is_administrator ( $user_id ) )
+                && ( whiteboard_config_api::whitebaord_plugin_config_get ( 'show_menu', 'RoadmapPro' ) )
+            )
+            {
+                echo '<td>';
+                echo '| ';
+                echo '<a href="' . plugin_page ( 'roadmap_page', false, 'RoadmapPro' ) . '">' . plugin_lang_get ( 'menu_title', 'RoadmapPro' ) . '</a >';
+                echo '</td>';
+            }
+        }
+
         echo '<td>';
         echo ' |';
         echo '</td>';
