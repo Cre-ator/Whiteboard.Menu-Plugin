@@ -70,7 +70,7 @@ class whiteboard_print_api
             && file_exists ( config_get_global ( 'plugin_path' ) . 'VersionManagement' )
         )
         {
-            $versionmanagement_access_level = whiteboard_config_api::whitebaord_plugin_config_get ( 'version_management_access_level', 'VersionManagement' );
+            $versionmanagement_access_level = whiteboard_config_api::whitebaord_plugin_config_get ( 'access_level', 'VersionManagement' );
             if (
                 ( ( user_get_access_level ( $user_id, $project_id ) >= $versionmanagement_access_level ) || user_is_administrator ( $user_id ) )
                 && ( whiteboard_config_api::whitebaord_plugin_config_get ( 'show_menu', 'VersionManagement' ) )
