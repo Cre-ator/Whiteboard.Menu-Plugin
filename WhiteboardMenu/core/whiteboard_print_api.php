@@ -87,7 +87,7 @@ class whiteboard_print_api
             && file_exists ( config_get_global ( 'plugin_path' ) . 'RoadmapPro' )
         )
         {
-            $roadmappro_access_level = whiteboard_config_api::whitebaord_plugin_config_get ( 'roadmap_pro_access_level', 'RoadmapPro' );
+            $roadmappro_access_level = whiteboard_config_api::whitebaord_plugin_config_get ( 'access_level', 'RoadmapPro' );
             if (
                 ( ( user_get_access_level ( $user_id, $project_id ) >= $roadmappro_access_level ) || user_is_administrator ( $user_id ) )
                 && ( whiteboard_config_api::whitebaord_plugin_config_get ( 'show_menu', 'RoadmapPro' ) )

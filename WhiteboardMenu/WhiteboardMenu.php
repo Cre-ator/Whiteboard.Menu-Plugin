@@ -8,7 +8,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
         $this->description = 'Adds underlying menu for all Whiteboard Management plugins.';
         $this->page = 'config_page';
 
-        $this->version = '1.0.15';
+        $this->version = '1.0.16';
         $this->requires = array
         (
             'MantisCore' => '1.2.0, <= 1.3.99',
@@ -69,7 +69,7 @@ class WhiteboardMenuPlugin extends MantisPlugin
             $versionmanagement_access_level = $versionmanagement_installed ? whiteboard_config_api::whitebaord_plugin_config_get ( 'access_level', 'VersionManagement' ) : 0;
 
             $roadmappro_installed = plugin_is_installed ( 'RoadmapPro' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'RoadmapPro' );
-            $roadmappro_access_level = $roadmappro_installed ? whiteboard_config_api::whitebaord_plugin_config_get ( 'roadmap_pro_access_level', 'RoadmapPro' ) : 0;
+            $roadmappro_access_level = $roadmappro_installed ? whiteboard_config_api::whitebaord_plugin_config_get ( 'access_level', 'RoadmapPro' ) : 0;
 
             if (
                 user_is_administrator ( $user_id )
