@@ -104,7 +104,7 @@ class wmApi
       $whiteboardPlugins = self::getWhiteboardPlugins ();
       $whiteboardPluginCount = count ( $whiteboardPlugins );
 
-      echo '<div class="center">';
+      echo '<div class="table">';
       for ( $index = 0; $index < $whiteboardPluginCount; $index++ )
       {
          $whiteboardPlugin = $whiteboardPlugins[ $index ];
