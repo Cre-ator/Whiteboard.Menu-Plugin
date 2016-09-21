@@ -108,6 +108,7 @@ class wmApi
       for ( $index = 0; $index < $whiteboardPluginCount; $index++ )
       {
          $whiteboardPlugin = $whiteboardPlugins[ $index ];
+         $plugin = $whiteboardPlugin[ 1 ];
          $pluginAccessLevel = $whiteboardPlugin[ 2 ];
          $pluginShowMenu = $whiteboardPlugin[ 3 ];
          if ( ( user_is_administrator ( $userId ) || ( $userAccessLevel >= $pluginAccessLevel ) )
@@ -120,7 +121,7 @@ class wmApi
             }
 
             $pluginLink = $whiteboardPlugin[ 4 ];
-            echo '<div class="item">' . $pluginLink . '</div>';
+            echo '<div class="item">' . $pluginLink . plugin_lang_get ( 'menu_title', $plugin ) . '</a></div>';
          }
       }
       echo '</div>';
