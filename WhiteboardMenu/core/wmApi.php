@@ -121,7 +121,7 @@ class wmApi
             }
 
             $pluginLink = $whiteboardPlugin[ 4 ];
-            echo '<div class="item">' . $pluginLink . plugin_lang_get ( 'menu_title', $plugin ) . '</a></div>';
+            echo '<div class="item"><a href="' . $pluginLink . '">' . plugin_lang_get ( 'menu_title', $plugin ) . '</a></div>';
          }
       }
       echo '</div>';
