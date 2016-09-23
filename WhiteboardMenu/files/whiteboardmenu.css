@@ -1,0 +1,10 @@
+.item {
+    float: left;
+}
+
+div.table {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto !important;
+}

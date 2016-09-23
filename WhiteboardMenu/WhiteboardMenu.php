@@ -2,21 +2,24 @@
 
 class WhiteboardMenuPlugin extends MantisPlugin
 {
+   private $shortName = null;
+
    function register ()
    {
-      $this->name = 'WhiteboardMenu';
+      $this->shortName = 'WhiteboardMenu';
+      $this->name = 'Whiteboard.' . $this->shortName;
       $this->description = 'Adds underlying menu for all Whiteboard Management plugins.';
       $this->page = 'config_page';
 
-      $this->version = '1.0.18';
+      $this->version = '1.0.24';
       $this->requires = array
       (
          'MantisCore' => '1.2.0, <= 1.3.99',
       );
 
-      $this->author = 'Stefan Schwarz';
+      $this->author = 'cbb software GmbH (Rainer Dierck, Stefan Schwarz)';
       $this->contact = '';
-      $this->url = '';
+      $this->url = 'https://github.com/Cre-ator';
    }
 
    function hooks ()
@@ -34,25 +37,41 @@ class WhiteboardMenuPlugin extends MantisPlugin
       return array
       (
          'show_in_footer' => ON,
-         'show_menu' => ON,
+         'show_menu' => ON
       );
    }
 
-   function init ()
+   function schema ()
    {
-      $t_core_path = config_get_global ( 'plugin_path' )
-         . plugin_get_current ()
-         . DIRECTORY_SEPARATOR
-         . 'core'
-         . DIRECTORY_SEPARATOR;
-      require_once ( $t_core_path . 'whiteboard_constant_api.php' );
+      require_once ( __DIR__ . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'wmApi.php' );
+      $tableArray = array ();
+
+      $whiteboardMenuTable = array
+      (
+         'CreateTableSQL', array ( plugin_table ( 'menu', 'whiteboard' ), "
+            id                   I       NOTNULL UNSIGNED AUTOINCREMENT PRIMARY,
+            plugin_name          C(250)  DEFAULT '',
+            plugin_access_level  I       UNSIGNED,
+            plugin_show_menu     I       UNSIGNED,
+            plugin_menu_path     C(250)  DEFAULT ''
+            " )
+      );
+
+      $boolArray = wmApi::checkWhiteboardTablesExist ();
+      # add whiteboardmenu table if it does not exist
+      if ( !$boolArray[ 0 ] )
+      {
+         array_push ( $tableArray, $whiteboardMenuTable );
+      }
+
+      return $tableArray;
    }
 
    function footer ()
    {
       if ( plugin_config_get ( 'show_in_footer' ) )
       {
-         return '<address>' . $this->name . '&nbsp;' . $this->version . '&nbsp;Copyright&nbsp;&copy;&nbsp;2016&nbsp;by&nbsp;' . $this->author . '</address>';
+         return '<address>' . $this->shortName . ' ' . $this->version . ' Copyright &copy; 2016 by ' . $this->author . '</address>';
       }
       return null;
    }
@@ -61,33 +80,27 @@ class WhiteboardMenuPlugin extends MantisPlugin
    {
       if ( plugin_config_get ( 'show_menu' ) )
       {
-         require_once ( __DIR__ . '/core/whiteboard_config_api.php' );
+         require_once ( __DIR__ . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'wmApi.php' );
 
-         $project_id = helper_get_current_project ();
-         $user_id = auth_get_current_user_id ();
+         $projectId = helper_get_current_project ();
+         $userId = auth_get_current_user_id ();
+         $userAccessLevel = user_get_access_level ( $userId, $projectId );
+         $whiteboardPlugins = wmApi::getWhiteboardPlugins ();
 
-         $user_project_view_installed = plugin_is_installed ( 'UserProjectView' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'UserProjectView' );
-         $user_project_access_level = $user_project_view_installed ? whiteboard_config_api::whitebaord_plugin_config_get ( 'UserProjectAccessLevel', 'UserProjectView' ) : 0;
+         $showMenu = false;
+         foreach ( $whiteboardPlugins as $whiteboardPlugin )
+         {
+            $pluginAccessLevel = $whiteboardPlugin[ 2 ];
+            if ( ( user_is_administrator ( $userId ) )
+               || ( $userAccessLevel >= $pluginAccessLevel )
+            )
+            {
+               $showMenu = true;
+               break;
+            }
+         }
 
-         $specmanagement_installed = plugin_is_installed ( 'SpecManagement' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'SpecManagement' );
-         $specmanagement_access_level = $specmanagement_installed ? whiteboard_config_api::whitebaord_plugin_config_get ( 'AccessLevel', 'SpecManagement' ) : 0;
-
-         $storyboard_installed = plugin_is_installed ( 'StoryBoard' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'StoryBoard' );
-         $storyboard_access_level = $storyboard_installed ? whiteboard_config_api::whitebaord_plugin_config_get ( 'access_level', 'StoryBoard' ) : 0;
-
-         $versionmanagement_installed = plugin_is_installed ( 'VersionManagement' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'VersionManagement' );
-         $versionmanagement_access_level = $versionmanagement_installed ? whiteboard_config_api::whitebaord_plugin_config_get ( 'access_level', 'VersionManagement' ) : 0;
-
-         $roadmappro_installed = plugin_is_installed ( 'RoadmapPro' ) && file_exists ( config_get_global ( 'plugin_path' ) . 'RoadmapPro' );
-
-         if (
-            user_is_administrator ( $user_id )
-            || ( user_get_access_level ( $user_id, $project_id ) >= $user_project_access_level )
-            || ( user_get_access_level ( $user_id, $project_id ) >= $specmanagement_access_level )
-            || ( user_get_access_level ( $user_id, $project_id ) >= $storyboard_access_level )
-            || ( user_get_access_level ( $user_id, $project_id ) >= $versionmanagement_access_level )
-            || $roadmappro_installed
-         )
+         if ( $showMenu )
          {
             return '<a href="' . plugin_page ( 'whiteboard_menu' ) . '">' . plugin_lang_get ( 'menu_title' ) . '</a>';
          }

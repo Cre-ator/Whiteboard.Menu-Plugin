@@ -1,12 +1,12 @@
 <?php
-require_once ( __DIR__ . '/../core/whiteboard_config_api.php' );
+require_once ( __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . 'wmApi.php' );
 
 auth_reauthenticate ();
 access_ensure_global_level ( config_get ( 'AccessLevel' ) );
 form_security_validate ( 'plugin_WhiteboardMenu_config_update' );
 
-whiteboard_config_api::updateButton ( 'show_in_footer' );
-whiteboard_config_api::updateButton ( 'show_menu' );
+wmApi::updateButton ( 'show_in_footer' );
+wmApi::updateButton ( 'show_menu' );
 
 form_security_purge ( 'plugin_WhiteboardMenu_config_update' );
 print_successful_redirect ( plugin_page ( 'config_page', true ) );
