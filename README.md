@@ -32,4 +32,4 @@ Screenshots
 -----------
 
 Screenshot of the 'Whiteboard' menu. The 'Roadmap Pro' and 'Version Management' Plugins are already installed.
-![Whiteboard](/images/whiteboard_menu.png?raw=true "")
+![Whiteboard](/Images/whiteboard_menu.png?raw=true "")
